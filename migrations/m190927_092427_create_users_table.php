@@ -21,7 +21,8 @@
 				'fio' => $this->text(),
 				'registration_date' => $this->integer(),
 				'last_login' => $this->integer(),
-				'status' => $this->integer()->defaultValue(0)
+				'status' => $this->integer()->defaultValue(0),
+				'token' => $this->string(15),
 			]);
 		}
 
