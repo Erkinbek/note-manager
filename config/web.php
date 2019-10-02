@@ -13,7 +13,7 @@
 		],
 		'modules' => [
 			'api' => [
-				'class' => 'app\modules\ApiModule',
+				'class' => 'app\modules\api\ApiModule',
 			],
 		],
 		'components' => [
