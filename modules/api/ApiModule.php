@@ -2,6 +2,7 @@
 
 	namespace app\modules\api;
 
+	use Yii;
 	use yii\base\Module;
 
 	/**
@@ -21,5 +22,6 @@
 		{
 			$this->layout = false;
 			parent::init();
+			Yii::configure($this, require __DIR__ . '/config.php');
 		}
 	}

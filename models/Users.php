@@ -51,6 +51,22 @@
 			];
 		}
 
+		public function sendConfirmMail($token, $email, $fio)
+		{
+			Yii::$app->mailer->compose([
+				'html' => '@app/modules/api/views/mail-templates/register',
+			],
+			[
+				'token' => $token,
+				'fio' => $fio,
+				'email' => $email
+			])
+				->setFrom('erkin@pardayev.uz')
+				->setTo($email)
+				->setSubject("Testing")
+				->send();
+		}
+
 		/**
 		 * {@inheritdoc}
 		 */
