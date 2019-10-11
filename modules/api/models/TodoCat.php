@@ -1,30 +1,29 @@
 <?php
 
-	namespace app\models;
+  namespace app\modules\api\models;
 
 	use yii\db\ActiveRecord;
 
 	/**
-	 * This is the model class for table "costs".
+	 * This is the model class for table "todo_cat".
 	 *
 	 * @property int $id
 	 * @property int $user_id
-	 * @property int $cost_time
-	 * @property double $amount
-	 * @property int $pay_type
+	 * @property string $title
 	 * @property string $comment
-	 * @property int $cost_type
+	 * @property int $created
 	 *
 	 * @property Users $user
+	 * @property TodoList[] $todoLists
 	 */
-	class Costs extends ActiveRecord
+	class TodoCat extends ActiveRecord
 	{
 		/**
 		 * {@inheritdoc}
 		 */
 		public static function tableName()
 		{
-			return 'costs';
+			return 'todo_cat';
 		}
 
 		/**
@@ -33,10 +32,9 @@
 		public function rules()
 		{
 			return [
-				[['user_id'], 'required'],
-				[['user_id', 'cost_time', 'pay_type', 'cost_type'], 'integer'],
-				[['amount'], 'number'],
+				[['user_id', 'created'], 'integer'],
 				[['comment'], 'string'],
+				[['title'], 'string', 'max' => 255],
 				[['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => Users::className(), 'targetAttribute' => ['user_id' => 'id']],
 			];
 		}
@@ -49,11 +47,9 @@
 			return [
 				'id' => 'ID',
 				'user_id' => 'User ID',
-				'cost_time' => 'Cost Time',
-				'amount' => 'Amount',
-				'pay_type' => 'Pay Type',
+				'title' => 'Title',
 				'comment' => 'Comment',
-				'cost_type' => 'Cost Type',
+				'created' => 'Created',
 			];
 		}
 
@@ -63,5 +59,13 @@
 		public function getUser()
 		{
 			return $this->hasOne(Users::className(), ['id' => 'user_id']);
+		}
+
+		/**
+		 * @return \yii\db\ActiveQuery
+		 */
+		public function getTodoLists()
+		{
+			return $this->hasMany(TodoList::className(), ['cat_id' => 'id']);
 		}
 	}

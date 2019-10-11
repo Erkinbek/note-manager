@@ -1,27 +1,29 @@
 <?php
 
-	namespace app\models;
+  namespace app\modules\api\models;
 
 	use yii\db\ActiveRecord;
 
 	/**
-	 * This is the model class for table "notes".
+	 * This is the model class for table "events".
 	 *
 	 * @property int $id
 	 * @property int $user_id
+	 * @property string $title
 	 * @property string $body
 	 * @property int $created
+	 * @property int $status
 	 *
 	 * @property Users $user
 	 */
-	class Notes extends ActiveRecord
+	class Events extends ActiveRecord
 	{
 		/**
 		 * {@inheritdoc}
 		 */
 		public static function tableName()
 		{
-			return 'notes';
+			return 'events';
 		}
 
 		/**
@@ -30,9 +32,9 @@
 		public function rules()
 		{
 			return [
-				[['user_id'], 'required'],
-				[['user_id', 'created'], 'integer'],
+				[['user_id', 'created', 'status'], 'integer'],
 				[['body'], 'string'],
+				[['title'], 'string', 'max' => 255],
 				[['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => Users::className(), 'targetAttribute' => ['user_id' => 'id']],
 			];
 		}
@@ -45,8 +47,10 @@
 			return [
 				'id' => 'ID',
 				'user_id' => 'User ID',
+				'title' => 'Title',
 				'body' => 'Body',
 				'created' => 'Created',
+				'status' => 'Status',
 			];
 		}
 

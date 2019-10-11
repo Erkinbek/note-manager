@@ -1,29 +1,30 @@
 <?php
 
-	namespace app\models;
+	namespace app\modules\api\models;
 
 	use yii\db\ActiveRecord;
 
 	/**
-	 * This is the model class for table "events".
+	 * This is the model class for table "costs".
 	 *
 	 * @property int $id
 	 * @property int $user_id
-	 * @property string $title
-	 * @property string $body
-	 * @property int $created
-	 * @property int $status
+	 * @property int $cost_time
+	 * @property double $amount
+	 * @property int $pay_type
+	 * @property string $comment
+	 * @property int $cost_type
 	 *
 	 * @property Users $user
 	 */
-	class Events extends ActiveRecord
+	class Costs extends ActiveRecord
 	{
 		/**
 		 * {@inheritdoc}
 		 */
 		public static function tableName()
 		{
-			return 'events';
+			return 'costs';
 		}
 
 		/**
@@ -32,9 +33,10 @@
 		public function rules()
 		{
 			return [
-				[['user_id', 'created', 'status'], 'integer'],
-				[['body'], 'string'],
-				[['title'], 'string', 'max' => 255],
+				[['user_id'], 'required'],
+				[['user_id', 'cost_time', 'pay_type', 'cost_type'], 'integer'],
+				[['amount'], 'number'],
+				[['comment'], 'string'],
 				[['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => Users::className(), 'targetAttribute' => ['user_id' => 'id']],
 			];
 		}
@@ -47,10 +49,11 @@
 			return [
 				'id' => 'ID',
 				'user_id' => 'User ID',
-				'title' => 'Title',
-				'body' => 'Body',
-				'created' => 'Created',
-				'status' => 'Status',
+				'cost_time' => 'Cost Time',
+				'amount' => 'Amount',
+				'pay_type' => 'Pay Type',
+				'comment' => 'Comment',
+				'cost_type' => 'Cost Type',
 			];
 		}
 
