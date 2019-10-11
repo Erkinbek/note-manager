@@ -2,11 +2,11 @@
 
 	namespace app\modules\api\controllers;
 
-	use app\models\Users;
 	use Yii;
 	use yii\base\Controller;
 	use yii\helpers\Json;
 	use yii\web\Response;
+	use app\modules\api\models\Users;
 
 	class UserController extends Controller
 	{
