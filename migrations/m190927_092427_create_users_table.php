@@ -23,6 +23,7 @@
 				'last_login' => $this->integer(),
 				'status' => $this->integer()->defaultValue(0),
 				'token' => $this->string(15),
+        'access_token' => $this->string(15),
 			]);
 		}
 

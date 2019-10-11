@@ -23,5 +23,6 @@
 			$this->layout = false;
 			parent::init();
 			Yii::configure($this, require __DIR__ . '/config.php');
-		}
+      Yii::$app->user->enableSession = false;
+    }
 	}
