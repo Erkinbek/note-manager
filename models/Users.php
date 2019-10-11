@@ -43,7 +43,7 @@
 		{
 			return [
 				[['email', 'pass'], 'required'],
-				[['address', 'fio', 'token'], 'string'],
+				[['address', 'fio', 'token', 'access_token'], 'string'],
 				[['registration_date', 'last_login', 'status'], 'integer'],
 				[['email', 'pass', 'phone'], 'string', 'max' => 255],
 				[['email'], 'unique'],
