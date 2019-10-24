@@ -127,4 +127,9 @@
 		{
 			return $this->hasMany(TodoList::className(), ['user_id' => 'id']);
 		}
+
+		public static function findIdentityByAccessToken($token, $type = null)
+		{
+			return static::findOne(['token' => $token]);
+		}
 	}

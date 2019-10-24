@@ -1,6 +1,5 @@
 <?php
 	return [
 		'params' => [],
-		'components' => [
-		],
+		'components' => [],
 	];
