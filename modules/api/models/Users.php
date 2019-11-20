@@ -67,6 +67,15 @@
 				->send();
 		}
 
+		public function isAuthorized($data) : bool
+		{
+			if (isset($data['token'])) {
+				$r = Tokens::find()->select('id')->where(['user_id' => $data['user'], 'token' => $data['token']])->one();
+				if ($r) return true;
+			}
+			return false;
+		}
+
 		/**
 		 * {@inheritdoc}
 		 */
