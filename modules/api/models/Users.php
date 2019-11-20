@@ -70,10 +70,17 @@
 		public function isAuthorized($data) : bool
 		{
 			if (isset($data['token'])) {
-				$r = Tokens::find()->select('id')->where(['user_id' => $data['user'], 'token' => $data['token']])->one();
-				if ($r) return true;
+				$r = Tokens::find()->select(['ip', 'endDate', 'device'])->where(['user_id' => $data['user'], 'token' => $data['token']])->one();
+				return $this->checkUserData($r);
 			}
 			return false;
+		}
+
+		public function checkUserData($user) : bool
+		{
+			$device = $_SERVER['HTTP_USER_AGENT'];
+			if ($user->endDate != 0 && $user->endDate < time() || $device != $user->device) return false;
+			return true;
 		}
 
 		/**
