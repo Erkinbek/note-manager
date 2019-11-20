@@ -23,15 +23,27 @@ class TodoCatController extends Controller
 
   public function actionIndex()
   {
-    return TodoCat::find()->all();
+    return TodoCat::find()->where(['user_id' => $this->data['user']])->orderBy('id DESC')->all();
   }
+
+	/**
+	 * @return bool|string
+	 *
+	 * // Example of json
+			{
+				"token": "N6WR5900QWhX6ZovVy5mp301zBTSv9Qp",
+				"user": 1,
+				"title" : "test1",
+				"comment" : "For testing #1"
+			}
+	 */
 
   public function actionCreate()
   {
     $model = new TodoCat();
-    foreach ($this->data as $key => $value) {
-      $model->{$key} = $value;
-    }
+    $model->user_id = $this->data['user'];
+    $model->title = $this->data['title'];
+    $model->comment = $this->data['comment'];
     $model->created = time();
     if ($model->save()) {
       return true;
@@ -42,5 +54,67 @@ class TodoCatController extends Controller
       }
       return Json::encode($errors);
     }
+  }
+
+	/**
+	 *
+	 Example of json
+		{
+			"token": "N6WR5900QWhX6ZovVy5mp301zBTSv9Qp",
+			"user": 1,
+			"id" : 2
+		}
+	 */
+
+  public function actionView()
+  {
+  	$id = (int) $this->data['id'];
+	  $data = TodoCat::find()->where(['id' => $id])->orderBy('id DESC')->asArray()->all();
+	  return $data;
+  }
+
+	/**
+	 * @return bool
+	 * Example json
+		 {
+			 "token": "N6WR5900QWhX6ZovVy5mp301zBTSv9Qp",
+			 "user": 1,
+			 "id" : 1,
+			 "title" : "tested #1",
+			 "comment" : "For testing #1"
+		 }
+	 */
+
+  public function actionUpdate()
+  {
+	  $id = (int) $this->data['id'];
+	  $user = (int) $this->data['user'];
+  	$category = TodoCat::find()->where(['user_id'=> $user, 'id' => $id])->one();
+  	if ($category == null) return false;
+  	$category->comment = $this->data['comment'];
+  	$category->title = $this->data['title'];
+  	return $category->save();
+  }
+
+	/**
+	 *
+	 * @return bool
+	 *  Example json
+		 {
+			 "token": "N6WR5900QWhX6ZovVy5mp301zBTSv9Qp",
+			 "user": 1,
+			 "id" : 3
+		 }
+	 * @throws \Throwable
+	 * @throws \yii\db\StaleObjectException
+	 */
+
+  public function actionDelete() : bool
+  {
+	  $id = (int) $this->data['id'];
+	  $user = (int) $this->data['user'];
+	  $category = TodoCat::find()->where(['user_id'=> $user, 'id' => $id])->one();
+	  if ($category == null) return false;
+	  return $category->delete();
   }
 }
