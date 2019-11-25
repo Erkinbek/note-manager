@@ -47,7 +47,7 @@ class TodoCatController extends Controller
   public function actionView()
   {
   	$id = (int) $this->data['id'];
-	  $data = TodoCat::find()->where(['id' => $id])->orderBy('id DESC')->asArray()->all();
+	  $data = TodoCat::find()->where(['id' => $id])->orderBy('id DESC')->asArray()->one();
 	  return $data;
   }
 
