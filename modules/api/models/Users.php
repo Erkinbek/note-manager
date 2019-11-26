@@ -78,6 +78,7 @@
 
 		public function checkUserData($user) : bool
 		{
+			if ($user === null) return false;
 			$device = $_SERVER['HTTP_USER_AGENT'];
 			if ($user->endDate != 0 && $user->endDate < time() || $device != $user->device) return false;
 			return true;
