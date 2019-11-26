@@ -19,6 +19,16 @@
 		public $controllerNamespace = 'app\modules\api\controllers';
 		public $data;
 
+		public function beforeAction($action)
+		{
+			if ($action->controller->id != 'user') {
+				if (!$this->isAuthorized() && !$this->isLogin()) {
+					exit("You are not authorised!");
+				}
+			}
+			return parent::beforeAction($action);
+		}
+
 		/**
 		 * {@inheritdoc}
 		 */
@@ -30,9 +40,6 @@
 			Yii::$app->user->enableSession = false;
 			Yii::configure($this, require __DIR__ . '/config.php');
       Yii::$app->user->enableSession = false;
-      if (!$this->isAuthorized() && !$this->isLogin()) {
-      	exit("You are not authorised!");
-      }
     }
 
     public function isAuthorized() : bool
