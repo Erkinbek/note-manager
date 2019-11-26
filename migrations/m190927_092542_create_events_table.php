@@ -13,11 +13,11 @@
 		public function safeUp()
 		{
 			$this->createTable('{{%events}}', [
-				// Id, user_id, title, body, created, status
 				'id' => $this->primaryKey(),
 				'user_id' => $this->integer(),
 				'title' => $this->string(),
 				'body' => $this->text(),
+				'event_datetime' => $this->integer(),
 				'created' => $this->integer(),
 				'status' => $this->integer()->defaultValue(0)
 			]);

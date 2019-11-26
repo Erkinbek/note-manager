@@ -5,7 +5,7 @@
 	/**
 	 * Class m191119_031726_tokens_table
 	 */
-	class m191119_031726_tokens_table extends Migration
+	class m191119_031726_create_tokens_table extends Migration
 	{
 		/**
 		 * {@inheritdoc}
