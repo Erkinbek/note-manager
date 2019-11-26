@@ -18,6 +18,8 @@
 				'created' => $this->integer()->notNull(),
 				'name' => $this->string()->notNull(),
 				'comment' => $this->string()->notNull(),
+				'month' => $this->integer(2)->notNull(),
+				'day' => $this->integer(2)->notNull()
 			]);
 
 			$this->addForeignKey(

@@ -48,8 +48,8 @@
 
 		public function actionActivate() : bool
 		{
-			$email = Yii::$app->getRequest()->getQueryParam('email');
-			$token = Yii::$app->getRequest()->getQueryParam('token');
+			$email = $this->data['email'];
+			$token = $this->data['token'];
 			$user = Users::find()->where(['email' => $email, 'token' => $token, 'status' => 0])->one();
 			if ($user) {
 				$user->status = 1;
@@ -69,7 +69,7 @@
 			$pass = $this->data['pass'];
 			$user = Users::find()->select(['id', 'pass'])->where(['email' => $email, 'status' => 1])->one();
 			if (!$user) return $result;
-			$r = Yii::$app->security->validatePassword($this->data['pass'], $user->pass);
+			$r = Yii::$app->security->validatePassword($pass, $user->pass);
 			if (!$r) return $result;
 			return [
 				'token' => $this->generateToken($user->id),
